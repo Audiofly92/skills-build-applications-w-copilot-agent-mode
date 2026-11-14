@@ -39,6 +39,12 @@ describe('OctoFit presentation contract', () => {
     await waitFor(() => expect(screen.getByText(/run/i)).toBeInTheDocument());
   });
 
+  it('renders teams without a members array', async () => {
+    vi.stubGlobal('fetch', vi.fn(async () => new Response(JSON.stringify({ teams: [{ name: 'Legacy team' }] }), { status: 200 })));
+    renderRoute('/teams');
+    await waitFor(() => expect(screen.getByText(/Legacy team - 0 members/)).toBeInTheDocument());
+  });
+
   it('renders teams, leaderboard, and workout suggestions with accessible content', async () => {
     const teams = renderRoute('/teams');
     await waitFor(() => expect(screen.getByText(/Octocats/)).toBeInTheDocument());

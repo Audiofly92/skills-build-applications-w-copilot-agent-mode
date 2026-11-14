@@ -1,6 +1,6 @@
 import ApiList from './ApiList.js';
 
-type Team = { name: string; members: string[] };
+type Team = { name: string; members?: string[] | null };
 
 export default function Teams() {
   return (
@@ -10,7 +10,7 @@ export default function Teams() {
       endpoint="/api/teams"
       dataKey="teams"
       emptyMessage="No teams yet."
-      renderItem={(team) => `${team.name} - ${team.members.length} members`}
+      renderItem={(team) => `${team.name} - ${team.members?.length ?? 0} members`}
     />
   );
 }
